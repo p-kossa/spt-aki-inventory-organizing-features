@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace InventoryOrganizingFeatures
 {
-    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
+    [BepInPlugin("com.nightingale.inventoryorg", "InventoryOrganizingFeatures", "1.2.1")]
     [BepInDependency("com.spt-aki.core", "3.7.1")]
     public class Plugin : BaseUnityPlugin
     {
@@ -17,7 +17,7 @@ namespace InventoryOrganizingFeatures
         private void Awake()
         {
             // Plugin startup logic
-            Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+            Logger.LogInfo($"Plugin InventoryOrganizingFeatures v1.2.1 is loaded!");
             GlobalLogger = Logger;
             ReflectionHelper.Logger = Logger;
 
