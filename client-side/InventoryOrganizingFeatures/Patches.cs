@@ -1,28 +1,20 @@
-﻿using Aki.Reflection.Patching;
-using EFT.HandBook;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using Aki.Reflection.Patching;
 using EFT.InventoryLogic;
 using EFT.UI;
 using EFT.UI.DragAndDrop;
 using HarmonyLib;
 using InventoryOrganizingFeatures.Reflections;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using static InventoryOrganizingFeatures.Locker;
-using static InventoryOrganizingFeatures.Organizer;
 using static InventoryOrganizingFeatures.OrganizedContainer;
+using static InventoryOrganizingFeatures.Organizer;
 using static InventoryOrganizingFeatures.UserInterfaceElements;
-using InventoryOrganizingFeatures.Reflections.Extensions;
-using TMPro;
 
 namespace InventoryOrganizingFeatures
 {
@@ -235,6 +227,7 @@ namespace InventoryOrganizingFeatures
                 if (callerMethod.Name.Equals("OnClick") && callerMethod.ReflectedType == typeof(ItemView))
                 {
                     Item item = null;
+
                     var traverse = Traverse.Create(__instance);
                     // When __instance is just moved (GClass2441 - SPT AKI 3.5.5)
                     if (traverse.Property("Item").PropertyExists())
@@ -269,10 +262,13 @@ namespace InventoryOrganizingFeatures
         }
 
         [PatchPrefix]
-        private static void PatchPrefix(Item item, ref bool displayWarnings)
+        private static void PatchPrefix(object itemContext, ref bool displayWarnings)
         {
             try
             {
+                FieldInfo itemField = AccessTools.Field(itemContext.GetType(), "Item");
+                var item = itemField.GetValue(itemContext) as Item;
+
                 // Don't display warnings if item IsMoveLocked
                 if (IsMoveLocked(item)) displayWarnings = false;
             }

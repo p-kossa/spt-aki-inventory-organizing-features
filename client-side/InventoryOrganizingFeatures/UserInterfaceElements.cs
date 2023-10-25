@@ -100,7 +100,7 @@ namespace InventoryOrganizingFeatures
                     }
                     if (child.name.Equals("Text"))
                     {
-                        child.GetComponent<CustomTextMeshProUGUI>().text = "ORG.";
+                        child.GetComponent<TextMeshProUGUI>().text = "ORG.";
                     }
                 }
             }
@@ -166,7 +166,7 @@ namespace InventoryOrganizingFeatures
                 }
                 if (child.name.Equals("Text"))
                 {
-                    child.GetComponent<CustomTextMeshProUGUI>().text = "\u21e7T/O";
+                    child.GetComponent<TextMeshProUGUI>().text = "\u21e7T/O";
                 }
             }
             
